@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+"http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+	<form-beans>
+		<!--  -->
+		<form-bean name="formLogin" type="com.project.model.FormLogin"/>
+		<!--  -->
+		<form-bean name="user" type="com.project.model.User"></form-bean>
+		<!--  -->
+		<form-bean name="customer" type="com.project.model.Customer"></form-bean>
+	</form-beans>
+	<action-mappings>
+		<!-- Dung ForwardAction chuyen trang -->
+		<action path="/welcome"
+			type="org.apache.struts.actions.ForwardAction"
+			parameter="/login.jsp"></action>
+		<!-- Chuyen request lai trang login -->
+		<action path="/login"
+			type="com.project.action.LoginAction" 
+			name="formLogin" 
+			scope="request"
+			input="/login.jsp">
+			<forward name="fail" path="/login.jsp" />
+			<forward name="success" path="/search.jsp" />
+		</action>
+		<!-- Dung DispatchAction gom gon hon -->
+		<action path="/user" 
+			type="com.project.action.UserAction" 
+			name="user" 
+			parameter="action">
+			<forward name="adduser" path="/user/adduser.jsp"/>
+			<forward name="deleteuser" path="/user/deleteuser.jsp"/>
+			<forward name="edituser" path="/user/edituser.jsp"/>
+		</action>
+		<!-- Dung MappingDispatchAction bao mat hon -->
+		<action path="/add-user" 
+			type="com.project.action.UserAction" 
+			parameter="addUser">
+			<forward name="adduser" path="/user/adduser.jsp"/>
+		</action>
+		<action path="/view-user" 
+			type="com.project.action.UserAction" 
+			name="user" 
+			parameter="User"
+			validate="true"
+			input="/user/adduser.jsp">
+			<forward name="user" path="/user/user.jsp"/>
+		</action>
+		<action path="/delete-user" 
+			type="com.project.action.UserAction" 
+			name="user" 
+			parameter="deleteUser">
+			<forward name="deleteuser" path="/user/deleteuser.jsp"/>
+		</action>
+		<action path="/edit-user" 
+			type="com.project.action.UserAction" 
+			name="user" 
+			parameter="editUser">
+			<forward name="edituser" path="/user/edituser.jsp"/>
+		</action>
+	</action-mappings>
+	<!-- File Messages -->
+	<message-resources parameter="messages"></message-resources>
+</struts-config>
